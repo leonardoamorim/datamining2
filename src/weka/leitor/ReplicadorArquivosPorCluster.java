@@ -58,7 +58,6 @@ public class ReplicadorArquivosPorCluster {
     	StringBuffer textoBuffer = new StringBuffer();
     	// add cabecalho do arquivo.
 	    textoBuffer.append("@relation arquivo \n \n"+
-	    					"@attribute numero instancia \n"+
 							"@attribute id_usuario numeric \n"+
 							"@attribute marcador {DimensaoAmbiental,DimensaoSocial} \n"+
 							"@attribute tipo_marcador numeric \n"+
@@ -70,14 +69,13 @@ public class ReplicadorArquivosPorCluster {
 							"@attribute minuto numeric \n"+
 							"@attribute segundo numeric \n"+
 							"@attribute coordenada_x numeric \n"+
-							"@attribute coordenada_y numeric \n"+
-							"@attribute cluster numeric \n\n"+
+							"@attribute coordenada_y numeric \n\n"+
 							"@data \n");
     	for (int i=0; i < lista.size(); i++) {
     		Estatistica e = lista.get(i);
-    		textoBuffer.append(e.getNumero_instancia()+","+e.getId_usuario()+","+e.getMarcador()+","+e.getTipo_marcador()+","+e.getAno()
+    		textoBuffer.append(e.getId_usuario()+","+e.getMarcador()+","+e.getTipo_marcador()+","+e.getAno()
     				+","+e.getMes()+","+e.getSemana()+","+e.getDia()+","+e.getHora()+","+e.getMinuto()+","+e.getSegundo()
-    				+","+e.getCoordenadaX()+","+e.getCoordenadaY()+","+e.getCluster()+"\n");
+    				+","+e.getCoordenadaX()+","+e.getCoordenadaY()+"\n");
 		}
     	  try {  
               FileOutputStream oStream = new FileOutputStream("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/espacial/clusters/clusterizacao_espacial"+posicao+".arff"); // ou usando um File com argumento  
@@ -87,7 +85,9 @@ public class ReplicadorArquivosPorCluster {
     
               writer.flush();  
               writer.close();  
+              System.out.println("Arquivo clusterizacao_espacial"+posicao+".arff - Sucesso");
           } catch (Exception e) {  
+        	  System.out.println("Arquivo clusterizacao_espacial"+posicao+".arff - Erro");
               e.printStackTrace();  
           } 
     }
