@@ -62,24 +62,6 @@ public class ClusterizacaoEspacial {
 	    */
 	    StringBuffer textoBuffer = new StringBuffer();
 	    
-	    // add cabecalho do arquivo.
-	    textoBuffer.append("@relation arquivo \n \n"+
-	    					"@attribute numero instancia \n"+
-							"@attribute id_usuario numeric \n"+
-							"@attribute marcador {DimensaoAmbiental,DimensaoSocial} \n"+
-							"@attribute tipo_marcador numeric \n"+
-							"@attribute ano numeric \n"+
-							"@attribute mes numeric \n"+
-							"@attribute semana numeric \n"+
-							"@attribute dia numeric \n"+
-							"@attribute hora numeric \n"+
-							"@attribute minuto numeric \n"+
-							"@attribute segundo numeric \n"+
-							"@attribute coordenada_x numeric \n"+
-							"@attribute coordenada_y numeric \n"+
-							"@attribute cluster numeric \n\n"+
-							"@data \n");
-	    
 	        // Mostramos a que cluster pertence cada instância.
 	    for(int inst=0;inst<newData.numInstances();inst++)
 	    {

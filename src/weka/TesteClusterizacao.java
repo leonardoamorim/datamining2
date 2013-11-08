@@ -16,7 +16,7 @@ public class TesteClusterizacao
   {
   public static void main(String[] args) throws Exception
     {
-	  //	  clusterizacaoEspacial();
+	  	  clusterizacaoEspacial();
 //	   clusterizacaoPorClusterEmVariosArquivos();
 	 //  clusterizacaoTemporal();
 	  
