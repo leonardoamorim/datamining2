@@ -79,7 +79,9 @@ public class ClusterizacaoEspacial {
   
             writer.flush();  
             writer.close();  
+            System.out.println("Clusterização Espacial realizada com sucesso!");
         } catch (Exception e) {  
+        	System.out.println("Falha na clusterização Espacial!");
             e.printStackTrace();  
         } 
 	}
