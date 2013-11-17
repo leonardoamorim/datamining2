@@ -46,14 +46,14 @@ public class TesteClusterizacaoTemporal {
 		  for(int i = 0; i < 100; i++){
 			  TesteClusterizacaoTemporal tct = new TesteClusterizacaoTemporal("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/clusters/clusterizacao_temporal_"+i+".arff");
 				for(int cluster =0; cluster < 10; cluster++){
-					textoBuffer.append(" "+i+"."+cluster+" ");
+					textoBuffer.append(" "+i+"."+cluster+", ");
 					virgula= ", ";
 					for (int indicador=1; indicador <= 59; indicador++) {
 						quantidade = tct.getQuantidadeTipoIndicadorPorCluster(indicador, cluster);
 						if(indicador == 59){
 							virgula = "";
 						}
-						textoBuffer.append(","+quantidade+virgula);
+						textoBuffer.append(quantidade+virgula);
 					}
 					textoBuffer.append("\n");
 				}
