@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Mineracao {
@@ -47,11 +48,11 @@ public class Mineracao {
 			int totalTodasMarcacoes = 0;
 			for(int i=1; i <=59; i++){
 				int qtdeRegistros = m.contarTotalDeRegistrosPorTipoDeIndicador(i);
-				System.out.println("Indicador "+i+" - qtde Registros= "+qtdeRegistros);
+//				System.out.println("Indicador "+i+" - qtde Registros= "+qtdeRegistros);
 				
 				int qtdeMarcacoes = m.contarTotalDeMarcacaoPorTipoDeIndicador(i);
 				totalTodasMarcacoes += qtdeMarcacoes;
-				System.out.println("Indicador "+i+" - qtde Marcacoes= "+qtdeMarcacoes);
+//				System.out.println("Indicador "+i+" - qtde Marcacoes= "+qtdeMarcacoes);
 
 				// quatidade de marcacoes
 				String[] indicador = {null,null};
@@ -64,18 +65,42 @@ public class Mineracao {
             	
 				listaRankingIndicadores.add(indicador);
 			}
+			// Ordenar por ranking
+			m.ordenaPorRanking();
 			
-			System.out.println("Soma Total Todas as Marcações: "+totalTodasMarcacoes);
+//			System.out.println("Soma Total Todas as Marcações: "+totalTodasMarcacoes);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
     
-//    public void ordenaPorRanking(){
-//		for (int i=0; i < listaRankingIndicadores.size(); i++) {
-//			
-//		}
-//	}
+    public void ordenaPorRanking(){
+
+//			int aux;
+//			String[] indicador = {null,null};
+//			  //ordenar
+//			  for (int x = 0; x < listaRankingIndicadores.size(); x++) {
+//			   for (int y = x+1; y < listaRankingIndicadores.size(); y++) {
+//				   indicador = listaRankingIndicadores.get(x);
+//				   
+//			    if(Integer.parseInt(indicador[x]) < Integer.parseInt(indicador[y]) ){
+//			     aux = Integer.parseInt(indicador[x]);
+//			     indicador[x] = indicador[y];
+//			     indicador[y] = String.valueOf(aux);
+//			    }
+//			   }
+//			  }
+//			  
+//			  System.out.print("[");
+//			  
+//			  for (int k = 0; k < listaRankingIndicadores.size(); k++) {
+//			   System.out.print("-");
+//			   System.out.print(indicador[k]);
+//			  }
+//			  System.out.println("-]");
+		}
     
 	
 	public int contarTotalDeRegistrosPorTipoDeIndicador(int indicador){
