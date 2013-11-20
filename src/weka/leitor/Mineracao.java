@@ -5,14 +5,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Mineracao {
 	
 	private List<String[]> lista = new ArrayList<String[]>();
 	private List<String[]> listaIndicadores = new ArrayList<String[]>();
-	private static List<String[]> listaRankingIndicadores = new ArrayList<String[]>();
+	private static List<Tupla> listaRankingIndicadores = new ArrayList<Tupla>();
 
     public Mineracao(String caminhoDoArquivo) throws IOException {  
 	    
@@ -54,16 +55,10 @@ public class Mineracao {
 				totalTodasMarcacoes += qtdeMarcacoes;
 //				System.out.println("Indicador "+i+" - qtde Marcacoes= "+qtdeMarcacoes);
 
-				// quatidade de marcacoes
-				String[] indicador = {null,null};
             	// qual indicador pertence
-            	indicador[0] = ""+i;
-            	// valor do registro
-            	indicador[1] = ""+qtdeRegistros;
-            	// valor das Marcacoes
-            	indicador[1] = ""+qtdeMarcacoes;
+				Tupla tupla = new Tupla(i, qtdeRegistros, qtdeMarcacoes);
             	
-				listaRankingIndicadores.add(indicador);
+				listaRankingIndicadores.add(tupla);
 			}
 			// Ordenar por ranking
 			m.ordenaPorRanking();
@@ -77,30 +72,21 @@ public class Mineracao {
 	}
     
     public void ordenaPorRanking(){
-
-//			int aux;
-//			String[] indicador = {null,null};
-//			  //ordenar
-//			  for (int x = 0; x < listaRankingIndicadores.size(); x++) {
-//			   for (int y = x+1; y < listaRankingIndicadores.size(); y++) {
-//				   indicador = listaRankingIndicadores.get(x);
-//				   
-//			    if(Integer.parseInt(indicador[x]) < Integer.parseInt(indicador[y]) ){
-//			     aux = Integer.parseInt(indicador[x]);
-//			     indicador[x] = indicador[y];
-//			     indicador[y] = String.valueOf(aux);
-//			    }
-//			   }
-//			  }
-//			  
-//			  System.out.print("[");
-//			  
-//			  for (int k = 0; k < listaRankingIndicadores.size(); k++) {
-//			   System.out.print("-");
-//			   System.out.print(indicador[k]);
-//			  }
-//			  System.out.println("-]");
-		}
+    	Collections.sort(listaRankingIndicadores, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				Tupla t1 = (Tupla) o1;
+				Tupla t2 = (Tupla) o2;
+				if (t1.qtd_registros == t2.qtd_registros) {
+					return t1.qtd_marcadores > t2.qtd_marcadores ? -1 : (t1.qtd_marcadores < t2.qtd_marcadores ? +1 : 0); 
+				}
+				else
+				return t1.qtd_registros > t2.qtd_registros ? -1 : (t1.qtd_registros < t2.qtd_registros ? +1 : 0); 
+			}
+		});
+	    
+//	    ArrayList teste2 = listaR;
+		System.out.println("Ordenação: " + listaRankingIndicadores);
+	}
     
 	
 	public int contarTotalDeRegistrosPorTipoDeIndicador(int indicador){
