@@ -14,6 +14,7 @@ public class Mineracao {
 	private List<String[]> lista = new ArrayList<String[]>();
 	private List<String[]> listaIndicadores = new ArrayList<String[]>();
 	private static List<Tupla> listaRankingIndicadores = new ArrayList<Tupla>();
+	private static int totalGeralMarcacoes = 0;
 
     public Mineracao(String caminhoDoArquivo) throws IOException {  
 	    
@@ -46,14 +47,10 @@ public class Mineracao {
     public static void main(String[] args) {
 		try {
 			Mineracao m = new Mineracao("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/datawarehouse.csv");
-			int totalTodasMarcacoes = 0;
 			for(int i=1; i <=59; i++){
 				int qtdeRegistros = m.contarTotalDeRegistrosPorTipoDeIndicador(i);
-//				System.out.println("Indicador "+i+" - qtde Registros= "+qtdeRegistros);
-				
 				int qtdeMarcacoes = m.contarTotalDeMarcacaoPorTipoDeIndicador(i);
-				totalTodasMarcacoes += qtdeMarcacoes;
-//				System.out.println("Indicador "+i+" - qtde Marcacoes= "+qtdeMarcacoes);
+				totalGeralMarcacoes += qtdeMarcacoes;
 
             	// qual indicador pertence
 				Tupla tupla = new Tupla(i, qtdeRegistros, qtdeMarcacoes);
@@ -71,18 +68,8 @@ public class Mineracao {
 		
 	}
     
-    public void ordenaPorRanking(){
-    	Collections.sort(listaRankingIndicadores, new Comparator() {
-			public int compare(Object o1, Object o2) {
-				Tupla t1 = (Tupla) o1;
-				Tupla t2 = (Tupla) o2;
-				if (t1.qtd_registros == t2.qtd_registros) {
-					return t1.qtd_marcadores > t2.qtd_marcadores ? -1 : (t1.qtd_marcadores < t2.qtd_marcadores ? +1 : 0); 
-				}
-				else
-				return t1.qtd_registros > t2.qtd_registros ? -1 : (t1.qtd_registros < t2.qtd_registros ? +1 : 0); 
-			}
-		});
+	public void ordenaPorRanking(){
+    	Collections.sort(listaRankingIndicadores, new TuplaComparator());
 	    
 //	    ArrayList teste2 = listaR;
 		System.out.println("Ordenação: " + listaRankingIndicadores);

@@ -1,6 +1,8 @@
 package weka.leitor;
 
 
+
+
 class Tupla {
 	int indicador;
 	int qtd_registros;
@@ -14,5 +16,6 @@ class Tupla {
 	
 	public String toString(){
 		return "{ " + indicador + ", " + qtd_registros + ", " + qtd_marcadores + " }";
-	}	
+	}
+	
 }
