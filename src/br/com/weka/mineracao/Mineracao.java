@@ -1,4 +1,4 @@
-package weka.leitor;
+package br.com.weka.mineracao;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,19 +6,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import br.com.weka.comparator.TuplaComparator;
+import br.com.weka.model.Tupla;
 
 public class Mineracao {
 	
 	private List<String[]> lista = new ArrayList<String[]>();
 	private List<String[]> listaIndicadores = new ArrayList<String[]>();
-	private static List<Tupla> listaRankingIndicadores = new ArrayList<Tupla>();
-	private static int totalGeralMarcacoes = 0;
+	private List<Tupla> listaRankingIndicadores = new ArrayList<Tupla>();
+	private int totalGeralMarcacoes = 0;
 
-    public Mineracao(String caminhoDoArquivo) throws IOException {  
+    public Mineracao() throws IOException {  
 	    
-	    File arquivoCSV = new File(caminhoDoArquivo);  
+	    File arquivoCSV = new File("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/datawarehouse.csv");  
 	    FileReader fr = new FileReader(arquivoCSV);  
 	    BufferedReader br = new BufferedReader(fr);  
 	                     
@@ -44,35 +46,23 @@ public class Mineracao {
         } 
     }
     
-    public static void main(String[] args) {
-		try {
-			Mineracao m = new Mineracao("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/datawarehouse.csv");
+    public void startMineracao(){
 			for(int i=1; i <=59; i++){
-				int qtdeRegistros = m.contarTotalDeRegistrosPorTipoDeIndicador(i);
-				int qtdeMarcacoes = m.contarTotalDeMarcacaoPorTipoDeIndicador(i);
-				totalGeralMarcacoes += qtdeMarcacoes;
+				int qtdeRegistros = contarTotalDeRegistrosPorTipoDeIndicador(i);
+				int qtdeMarcacoes = contarTotalDeMarcacaoPorTipoDeIndicador(i);
+				setTotalGeralMarcacoes(getTotalGeralMarcacoes() + qtdeMarcacoes);
 
             	// qual indicador pertence
 				Tupla tupla = new Tupla(i, qtdeRegistros, qtdeMarcacoes);
             	
 				listaRankingIndicadores.add(tupla);
 			}
-			// Ordenar por ranking
-			m.ordenaPorRanking();
 			
-//			System.out.println("Soma Total Todas as Marcações: "+totalTodasMarcacoes);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
+    }
+
     
 	public void ordenaPorRanking(){
     	Collections.sort(listaRankingIndicadores, new TuplaComparator());
-	    
-//	    ArrayList teste2 = listaR;
-		System.out.println("Ordenação: " + listaRankingIndicadores);
 	}
     
 	
@@ -100,6 +90,22 @@ public class Mineracao {
 			}
 		}
 		return qtdeMarcacao;
+	}
+	
+	public List<Tupla> getListaRankingIndicadores() {
+		return listaRankingIndicadores;
+	}
+
+	public void setListaRankingIndicadores(List<Tupla> listaRankingIndicadores) {
+		this.listaRankingIndicadores = listaRankingIndicadores;
+	}
+
+	public int getTotalGeralMarcacoes() {
+		return totalGeralMarcacoes;
+	}
+
+	public void setTotalGeralMarcacoes(int totalGeralMarcacoes) {
+		this.totalGeralMarcacoes = totalGeralMarcacoes;
 	}
 
 }

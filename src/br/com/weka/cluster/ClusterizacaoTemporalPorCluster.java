@@ -1,4 +1,5 @@
-package weka.leitor;
+package br.com.weka.cluster;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,11 +12,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReplicadorArquivosPorCluster {
+import br.com.weka.model.Estatistica;
+
+public class ClusterizacaoTemporalPorCluster {
 
 	List<String[]> lista = new ArrayList<String[]>();  
 	
-    public ReplicadorArquivosPorCluster(String caminhoDoArquivo) throws IOException {  
+    public ClusterizacaoTemporalPorCluster(String caminhoDoArquivo) throws IOException {  
 	    
 	    File arquivoCSV = new File(caminhoDoArquivo);  
 	    FileReader fr = new FileReader(arquivoCSV);  
@@ -34,10 +37,10 @@ public class ReplicadorArquivosPorCluster {
     	if (lista.size() > 0) {  
             for (int i = 1; i < lista.size(); i++) {  
                 Estatistica estatistica = new Estatistica();
-                estatistica.setNumero_instancia(lista.get(i)[0]);
-                estatistica.setId_usuario(Integer.parseInt(lista.get(i)[1]));
+                estatistica.setNumeroInstancia(lista.get(i)[0]);
+                estatistica.setIdUsuario(Integer.parseInt(lista.get(i)[1]));
                 estatistica.setMarcador(lista.get(i)[2]);
-                estatistica.setTipo_marcador(Integer.parseInt(lista.get(i)[3]));
+                estatistica.setTipoMarcador(Integer.parseInt(lista.get(i)[3]));
                 estatistica.setAno(Integer.parseInt(lista.get(i)[4]));
                 estatistica.setMes(Integer.parseInt(lista.get(i)[5]));
                 estatistica.setSemana(Integer.parseInt(lista.get(i)[6]));
@@ -73,7 +76,7 @@ public class ReplicadorArquivosPorCluster {
 							"@data \n");
     	for (int i=0; i < lista.size(); i++) {
     		Estatistica e = lista.get(i);
-    		textoBuffer.append(e.getId_usuario()+","+e.getMarcador()+","+e.getTipo_marcador()+","+e.getAno()
+    		textoBuffer.append(e.getIdUsuario()+","+e.getMarcador()+","+e.getTipoMarcador()+","+e.getAno()
     				+","+e.getMes()+","+e.getSemana()+","+e.getDia()+","+e.getHora()+","+e.getMinuto()+","+e.getSegundo()
     				+","+e.getCoordenadaX()+","+e.getCoordenadaY()+"\n");
 		}
@@ -91,4 +94,19 @@ public class ReplicadorArquivosPorCluster {
               e.printStackTrace();  
           } 
     }
+
+
+	public void iniciarRanking() {
+		List<Estatistica> listaEstatistica = getListaEstatistica();
+		List<Estatistica> listaPorCluster = new ArrayList<Estatistica>();
+		for(int i=0; i <= 99; i++){
+			for (Estatistica estatistica : listaEstatistica) {
+				if(estatistica.getCluster().trim().equals(i+"")){
+					listaPorCluster.add(estatistica);
+				}
+			}
+			criarArquivo(listaPorCluster, i);
+			listaPorCluster = new ArrayList<Estatistica>();
+		}
+	}
 }

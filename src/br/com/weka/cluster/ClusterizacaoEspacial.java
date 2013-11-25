@@ -1,4 +1,4 @@
-package weka;
+package br.com.weka.cluster;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -15,8 +15,8 @@ import weka.filters.unsupervised.attribute.Remove;
 
 public class ClusterizacaoEspacial {
 
-	public void clusterizar()  throws Exception{
-		FileReader reader = new FileReader("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/arquivo.arff");
+	public void clusterizar(String arquivoOrigem, String arquivoDestino)  throws Exception{
+		FileReader reader = new FileReader(arquivoOrigem);
 	    Instances instâncias = new Instances(reader);
 	    String[] opcoes = new String[2];
 	    opcoes[0] = "-R";                                    // "range"
@@ -51,15 +51,7 @@ public class ClusterizacaoEspacial {
 	    Instances clusterSTDDEVs = agrupamento.getClusterStandardDevs();
 	    int[] clusterSizes = agrupamento.getClusterSizes();
 	    
-	    // Mostrando quantas instâncias tem um cluster e sua centroide (não vamos usar)
-	    /*
-	    for(int cluster=0;cluster<clusterCenters.numInstances();cluster++)
-	    {
-	      System.out.println("Cluster #"+(cluster+1)+": "+clusterSizes[cluster]+" dados.");
-	      System.out.println("   Centróide: "+clusterCenters.instance(cluster));
-	      //System.out.println("   STDDEV: "+clusterSTDDEVs.instance(cluster));
-	    }
-	    */
+
 	    StringBuffer textoBuffer = new StringBuffer();
 	    
 	        // Mostramos a que cluster pertence cada instância.
@@ -72,7 +64,7 @@ public class ClusterizacaoEspacial {
 	    }
 	    
 	    try {  
-            FileOutputStream oStream = new FileOutputStream("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/espacial/clusterizacao_espacial.arff"); // ou usando um File com argumento  
+            FileOutputStream oStream = new FileOutputStream(arquivoDestino); // ou usando um File com argumento  
             OutputStreamWriter osw = new OutputStreamWriter(oStream);  
             Writer writer = new BufferedWriter(osw);  
             writer.write(textoBuffer.toString());  
