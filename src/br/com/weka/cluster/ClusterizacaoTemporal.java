@@ -1,6 +1,7 @@
 package br.com.weka.cluster;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,6 +18,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
+import br.com.weka.manipulador.Manipulador;
 import br.com.weka.model.Estatistica;
 
 public class ClusterizacaoTemporal {
@@ -41,7 +43,8 @@ public class ClusterizacaoTemporal {
 
 	public void clusterizar()  throws Exception{
 		for (int i=0; i <= 99; i++) {
-				FileReader reader = new FileReader("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/espacial/clusters/clusterizacao_espacial"+i+".arff");
+				Manipulador manip = new Manipulador();
+				FileReader reader = new FileReader(manip.getDiretorioClustersEspaciais()+"clusterizacao_espacial"+i+".arff");
 			    Instances instâncias = new Instances(reader);
 			    String[] opcoes = new String[2];
 			    opcoes[0] = "-R";                                    // "range"
@@ -83,8 +86,8 @@ public class ClusterizacaoTemporal {
 			        textoBuffer.append(teste+","+cluster + " \n");	
 			    }
 			    
-			    try {  
-		            FileOutputStream oStream = new FileOutputStream("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/clusters/clusterizacao_temporal_"+i+".arff"); // ou usando um File com argumento  
+			    try {
+		            FileOutputStream oStream = new FileOutputStream(manip.getDiretorioClustersTemporais()+"clusterizacao_temporal_"+i+".arff"); // ou usando um File com argumento  
 		            OutputStreamWriter osw = new OutputStreamWriter(oStream);  
 		            Writer writer = new BufferedWriter(osw);  
 		            writer.write(textoBuffer.toString());  

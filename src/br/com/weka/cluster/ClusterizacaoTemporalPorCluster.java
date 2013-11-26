@@ -81,7 +81,7 @@ public class ClusterizacaoTemporalPorCluster {
     				+","+e.getCoordenadaX()+","+e.getCoordenadaY()+"\n");
 		}
     	  try {  
-              FileOutputStream oStream = new FileOutputStream("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/espacial/clusters/clusterizacao_espacial"+posicao+".arff"); // ou usando um File com argumento  
+              FileOutputStream oStream = new FileOutputStream("/home/leo/workspace2/DataMining2/arquivo/espacial/clusters/clusterizacao_espacial"+posicao+".arff"); // ou usando um File com argumento  
               OutputStreamWriter osw = new OutputStreamWriter(oStream);  
               Writer writer = new BufferedWriter(osw);  
               writer.write(textoBuffer.toString());  

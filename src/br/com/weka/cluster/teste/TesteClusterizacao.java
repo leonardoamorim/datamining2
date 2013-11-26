@@ -1,8 +1,11 @@
 package br.com.weka.cluster.teste;
 
+import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import br.com.weka.cluster.ClusterizacaoEspacial;
 import br.com.weka.cluster.ClusterizacaoTemporal;
@@ -10,19 +13,23 @@ import br.com.weka.cluster.ClusterizacaoTemporalPorCluster;
 import br.com.weka.mineracao.Datawarehouse;
 import br.com.weka.mineracao.Mineracao;
 import br.com.weka.model.Estatistica;
-
+import br.com.weka.manipulador.*;
+import java.util.Scanner;
 
 /**
  * Esta classe demonstra o uso de um algoritmo de agrupamento (K-Means). A classe
  * lê um arquivo no formato .ARFF, cria o agrupamento  e classifica o próprio arquivo original.
  */
-public class TesteClusterizacao
+public class TesteClusterizacao 
   {
+
+		
   public static void main(String[] args) throws Exception
     {
-//	  	  clusterizacaoEspacial();
-//	   clusterizacaoPorClusterEmVariosArquivos();
-//	   clusterizacaoTemporal();
+ 
+//      clusterizacaoEspacial();
+//      clusterizacaoPorClusterEmVariosArquivos();
+//	    clusterizacaoTemporal();
 //	  	geraDataWareHouse();
       geraRankingIndicadores();
 	  
@@ -39,13 +46,15 @@ public class TesteClusterizacao
 	}
 
 	private static void clusterizacaoEspacial() throws Exception {
+		Manipulador manip = new Manipulador();
 		ClusterizacaoEspacial clusterizacaoEspacial = new ClusterizacaoEspacial();
-		clusterizacaoEspacial.clusterizar("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/arquivo.arff", "/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/espacial/clusterizacao_espacial.arff");
+		clusterizacaoEspacial.clusterizar(manip.getArquivoPrincipal(), manip.getArquivoEspacial());
 	}
 	
 	private static void clusterizacaoPorClusterEmVariosArquivos(){
 		try {
-		ClusterizacaoTemporalPorCluster ctpc = new ClusterizacaoTemporalPorCluster("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/espacial/clusterizacao_espacial.arff");
+		Manipulador manip = new Manipulador();
+		ClusterizacaoTemporalPorCluster ctpc = new ClusterizacaoTemporalPorCluster(manip.getArquivoEspacial());
 		ctpc.iniciarRanking();
 		System.out.println("---------------- Criado Arquivos ------------------");
 		}catch(IOException ex){
@@ -54,9 +63,10 @@ public class TesteClusterizacao
 			
 	}
   
-	public static void geraDataWareHouse(){
+	public static void geraDataWareHouse() throws IOException{
+		Manipulador manip = new Manipulador();
 		Datawarehouse datawarehouse = new Datawarehouse();
-		datawarehouse.geraDataWareHouse("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/clusters/", "/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/datawarehouse.csv");
+		datawarehouse.geraDataWareHouse(manip.getDiretorioClustersTemporais(), manip.getArquivoDatawarehouse());
 	}
 	
 	public static void geraRankingIndicadores(){
@@ -70,4 +80,5 @@ public class TesteClusterizacao
 			e.printStackTrace();
 		}
 	}
+	
 }

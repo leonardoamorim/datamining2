@@ -1,6 +1,7 @@
 package br.com.weka.mineracao;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,6 +11,8 @@ import java.util.List;
 
 import br.com.weka.comparator.TuplaComparator;
 import br.com.weka.model.Tupla;
+import br.com.weka.manipulador.*;
+
 
 public class Mineracao {
 	
@@ -19,8 +22,8 @@ public class Mineracao {
 	private int totalGeralMarcacoes = 0;
 
     public Mineracao() throws IOException {  
-	    
-	    File arquivoCSV = new File("/home/adercio/Área de Trabalho/projetoClusterizacao/datamining2/arquivo/temporal/datawarehouse.csv");  
+    	Manipulador manip = new Manipulador();
+	    File arquivoCSV = new File(manip.getArquivoDatawarehouse());  
 	    FileReader fr = new FileReader(arquivoCSV);  
 	    BufferedReader br = new BufferedReader(fr);  
 	                     
